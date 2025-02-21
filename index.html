@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para mi Caperucita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Product+Sans&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Product Sans', sans-serif;
             background-color: #fde2e4;
             text-align: center;
             padding: 20px;
+            overflow-y: auto;
         }
         .container {
             background: white;
@@ -18,6 +20,7 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             margin: auto;
+            position: relative;
         }
         h1 {
             color: #d6336c;
@@ -26,34 +29,77 @@
             font-size: 18px;
             color: #444;
             line-height: 1.6;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
         }
-        .spotify-link {
-            display: inline-block;
+        .spotify-player {
             margin: 20px 0;
-            padding: 10px 20px;
-            background-color: #1db954;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
         }
-        .spotify-link:hover {
-            background-color: #169c4e;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .petal {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: pink;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
+    <div class="petals"></div>
     <div class="container">
         <h1>Caperucita!! ❤️</h1>
         <p>Antes de seguir leyendo, quiero que hagas algo: abre <strong>Spotify</strong>, busca <strong>"Thinking Out Loud"</strong> y dale play. 🎶</p>
-        <a class="spotify-link" href="https://open.spotify.com/track/34gCuhDGsG4bRPIf9bb02f" target="_blank">Escuchar en Spotify</a>
+        <div class="spotify-player">
+            <iframe style="border-radius:12px" 
+                src="https://open.spotify.com/embed/track/34gCuhDGsG4bRPIf9bb02f?utm_source=generator" 
+                width="100%" 
+                height="152" 
+                frameBorder="0" 
+                allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
+        </div>
         <p>Ahora sí...</p>
         <p>Hoy celebramos otro año juntos, otro capítulo de esta historia que cada día se vuelve más hermosa...</p>
         <p>Desde el primer momento supe que eras especial, pero con el tiempo me has demostrado que el amor verdadero no solo se siente, sino que también se construye con cada sonrisa, cada abrazo y cada momento compartido.</p>
         <p>Quiero que sepas que, sin importar los años que pasen, mi amor por ti seguirá creciendo. Incluso cuando seamos pasitas y nuestras canas empiecen a asomarse, seguiré mirándote con los mismos ojos de admiración y amor con los que lo hago hoy.</p>
         <p>Al igual que en la canción, cuando nuestras piernas no caminen como antes y la memoria nos juegue malas pasadas, mi corazón seguirá recordando cada detalle de lo que hemos vivido juntos. Porque amarte no es solo un sentimiento, es una elección que haré todos los días de mi vida.</p>
-        <p>Gracias por ser mi compañera, mi refugio y mi razón de sonreír. ¡Feliz aniversario, mi hermosa Caperucita! Que este sea solo un capítulo más de la historia infinita que quiero escribir a tu lado.</p>
-        <p><strong>Te Amo Mathias ❤️</strong></p>
+        <p>Gracias por ser mi compañera, mi refugio y mi razón de sonreír.</p>
+        <p>¡Feliz aniversario, mi hermosa Caperucita! Que este sea solo un capítulo más de la historia infinita que quiero escribir a tu lado.</p>
+        <p><strong>Te Amo Diana ❤️</strong></p>
     </div>
+    <script>
+        function createPetal() {
+            const petal = document.createElement("div");
+            petal.classList.add("petal");
+            document.querySelector(".petals").appendChild(petal);
+            
+            petal.style.left = Math.random() * 100 + "vw";
+            petal.style.animationDuration = Math.random() * 3 + 2 + "s";
+            
+            setTimeout(() => { petal.remove(); }, 5000);
+        }
+        setInterval(createPetal, 300);
+    </script>
 </body>
 </html>
